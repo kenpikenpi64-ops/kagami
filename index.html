@@ -632,6 +632,8 @@ let cAns='',cIns='',cAct='',cShort='',cLabel='';
 
 const isMobile=()=>window.matchMedia('(pointer:coarse)').matches;
 
+const APP_URL = "https://osakenpiro.github.io/kagami/";
+
 // ─── STORAGE ────────────────────────────────────
 const LS_KEY='kagami_v7';
 function getEntries(){try{return JSON.parse(localStorage.getItem(LS_KEY)||'[]')}catch{return[]}}
@@ -873,7 +875,13 @@ function tweetText(){
   ].join('\n');
 }
 function shareX(){
-  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText())}`,'_blank','width=560,height=420');
+  const text = tweetText();
+  window.open(
+    `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(APP_URL)}`,
+    '_blank',
+    'width=560,height=420'
+  );
+}
   const es=getEntries();const i=es.findIndex(e=>e.date===dateKey());
   if(i>=0){es[i].postedToX=true;localStorage.setItem(LS_KEY,JSON.stringify(es))}
   toast('Xに投稿しました ✓');
@@ -898,7 +906,11 @@ function reshare(){
   cAns=e.answer;cIns=e.insight;cAct=e.action;
   cShort=e.short||(e.insight.split('。')[0]+'。');
   cLabel=e.dateLabel||dateFmt();
-  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText())}`,'_blank','width=560,height=420');
+  window.open(
+  `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText())}&url=${encodeURIComponent(APP_URL)}`,
+  '_blank',
+  'width=560,height=420'
+);
 }
 
 // ─── DIARY ──────────────────────────────────────
